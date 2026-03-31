@@ -40,4 +40,14 @@ public class AppointmentServiceImpl implements AppointmentService {
         //Entity->Dto
         return modelMapper.map(savedAppointment,AppointmentDto.class);
     }
+
+    @Override
+    public AppointmentDto getAppointment(Long id) {
+        Appointment appointment = appointmentRepository.findById(id)
+                .orElseThrow(()->new ResourceNotFoundException("Appointment not found"+id));
+
+        return modelMapper.map(appointment,AppointmentDto.class);
+    }
+
+
 }
