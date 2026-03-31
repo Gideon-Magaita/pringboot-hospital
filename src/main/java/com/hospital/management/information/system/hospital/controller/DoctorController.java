@@ -34,4 +34,16 @@ public class DoctorController {
         List<DoctorDto> doctorList = doctorService.getAllDoctors();
         return ResponseEntity.ok(doctorList);
     }
+
+    @PutMapping("{id}")
+    public ResponseEntity<DoctorDto>updateDoctor(@RequestBody DoctorDto doctorDto,@PathVariable("id") Long doctorId){
+        DoctorDto updatedDoctor = doctorService.updateDoctor(doctorDto,doctorId);
+        return ResponseEntity.ok(updatedDoctor);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<String>deleteDoctor(@PathVariable("id") Long doctorId){
+        doctorService.deleteDoctor(doctorId);
+        return ResponseEntity.ok("Doctor deleted succesfully!");
+    }
 }

@@ -44,4 +44,25 @@ public class DoctorServiceImpl implements DoctorService {
                 .map(doctor,DoctorDto.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public DoctorDto updateDoctor(DoctorDto doctorDto, Long id) {
+        Doctor doctor = doctorRepository.findById(id)
+                .orElseThrow(()->new ResourceNotFoundException("Doctor id does not found!"+id));
+        doctor.setName(doctorDto.getName());
+        doctor.setSpecialization(doctorDto.getSpecialization());
+        doctor.setPhone(doctorDto.getPhone());
+        doctor.setStatus(doctorDto.getStatus());
+
+        Doctor savedDoctor = doctorRepository.save(doctor);
+        return modelMapper.map(savedDoctor,DoctorDto.class);
+    }
+
+    @Override
+    public void deleteDoctor(Long id) {
+        doctorRepository.findById(id)
+                .orElseThrow(()->new ResourceNotFoundException("Doctor id does not found"+id));
+        doctorRepository.deleteById(id);
+    }
+
 }
