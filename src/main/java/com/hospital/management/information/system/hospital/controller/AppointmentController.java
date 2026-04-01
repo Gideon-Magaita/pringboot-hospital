@@ -41,4 +41,10 @@ public class AppointmentController {
         AppointmentDto updatedAppointment = appointmentService.updateAppointments(appointmentDto,appointmentId);
         return ResponseEntity.ok(updatedAppointment);
     }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<String>deleteAppointment(@PathVariable("id") Long appointmentId){
+        appointmentService.deleteAppointment(appointmentId);
+        return ResponseEntity.ok("Appointment deleted successfully!");
+    }
 }
