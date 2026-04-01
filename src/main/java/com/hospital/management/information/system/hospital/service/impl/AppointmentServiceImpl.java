@@ -13,6 +13,9 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 @AllArgsConstructor
@@ -47,6 +50,41 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .orElseThrow(()->new ResourceNotFoundException("Appointment not found"+id));
 
         return modelMapper.map(appointment,AppointmentDto.class);
+    }
+
+    @Override
+    public List<AppointmentDto> getAllAppointments() {
+        List<Appointment> appointments = appointmentRepository.findAll();
+        return appointments.stream().map((appointment)->modelMapper
+                .map(appointment,AppointmentDto.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public AppointmentDto updateAppointments(AppointmentDto appointmentDto, Long id) {
+        Appointment appointment = appointmentRepository.findById(id)
+                .orElseThrow(()->new ResourceNotFoundException("Appointment id not found"+id));
+        appointment.setAppointmentDate(appointmentDto.getAppointmentDate());
+        appointment.setStatus(appointmentDto.getStatus());
+        appointment.setNotes(appointmentDto.getNotes());
+
+        //handle doctor foreign key
+        Doctor doctor =doctorRepository.findById(appointmentDto.getDoctorId())
+                .orElseThrow(()->new ResourceNotFoundException("Doctor not found!"));
+        appointment.setDoctor(doctor);
+
+        //handle patient foreign key
+        Patient patient = patientRepository.findById(appointmentDto.getPatientId())
+                .orElseThrow(()->new ResourceNotFoundException("Patient not found!"));
+        appointment.setPatient(patient);
+
+        Appointment updatedAppointment = appointmentRepository.save(appointment);
+        //To Dto
+        AppointmentDto dto = modelMapper.map(updatedAppointment,AppointmentDto.class);
+        dto.setDoctorId(updatedAppointment.getDoctor().getId());
+        dto.setPatientId(updatedAppointment.getPatient().getId());
+
+        return dto;
     }
 
 
