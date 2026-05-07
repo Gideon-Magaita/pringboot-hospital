@@ -18,35 +18,35 @@ public class DoctorController {
 
     private DoctorService doctorService;
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<DoctorDto>addDoctor(@RequestBody DoctorDto doctorDto){
         DoctorDto savedDoctors = doctorService.addDoctor(doctorDto);
         return new ResponseEntity<>(savedDoctors, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("{id}")
     public ResponseEntity<DoctorDto>getDoctor(@PathVariable("id") Long doctorId){
         DoctorDto doctor = doctorService.getDoctor(doctorId);
         return ResponseEntity.ok(doctor);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+//    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @GetMapping
     public ResponseEntity<List<DoctorDto>>getAllDoctors(){
         List<DoctorDto> doctorList = doctorService.getAllDoctors();
         return ResponseEntity.ok(doctorList);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("{id}")
     public ResponseEntity<DoctorDto>updateDoctor(@RequestBody DoctorDto doctorDto,@PathVariable("id") Long doctorId){
         DoctorDto updatedDoctor = doctorService.updateDoctor(doctorDto,doctorId);
         return ResponseEntity.ok(updatedDoctor);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("{id}")
     public ResponseEntity<String>deleteDoctor(@PathVariable("id") Long doctorId){
         doctorService.deleteDoctor(doctorId);

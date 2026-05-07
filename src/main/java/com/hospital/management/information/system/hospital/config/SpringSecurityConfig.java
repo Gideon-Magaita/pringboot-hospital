@@ -59,9 +59,10 @@ public class SpringSecurityConfig {
                 .csrf(csrf->csrf.disable())
                 .authorizeHttpRequests(auth->auth
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/department/**").permitAll()
+//                        .requestMatchers("/api/department/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
-                        .anyRequest().authenticated()
+//                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 ).httpBasic(Customizer.withDefaults());
 
         //JWT AUTH COMES HERE

@@ -18,4 +18,5 @@ public class DoctorDto {
     private AvailabilityStatus status;
 
     private Long departmentId;
+    private String departmentName;
 }

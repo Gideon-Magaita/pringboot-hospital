@@ -24,16 +24,31 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public DoctorDto addDoctor(DoctorDto doctorDto) {
-        //Dto->JPA
+
+        // DTO -> Entity
         Doctor doctor = modelMapper.map(doctorDto, Doctor.class);
-        //Handle Department & Doctor relationship
+
+        // Load Department
         Department department = departmentRepository.findById(doctorDto.getDepartmentId())
-                .orElseThrow(()->new ResourceNotFoundException("Department id not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Department id not found"));
+
         doctor.setDepartment(department);
-        //Save jpa
+
+        // Save entity
         Doctor savedDoctor = doctorRepository.save(doctor);
-        //JPA entity ->DTO
-        return modelMapper.map(savedDoctor,DoctorDto.class);
+
+        // Entity -> DTO (MANUAL FIX HERE)
+        DoctorDto responseDto = new DoctorDto();
+        responseDto.setId(savedDoctor.getId());
+        responseDto.setName(savedDoctor.getName());
+        responseDto.setSpecialization(savedDoctor.getSpecialization());
+        responseDto.setPhone(savedDoctor.getPhone());
+        responseDto.setStatus(savedDoctor.getStatus());
+
+        responseDto.setDepartmentId(savedDoctor.getDepartment().getId());
+        responseDto.setDepartmentName(savedDoctor.getDepartment().getName());
+
+        return responseDto;
     }
 
     @Override
@@ -53,23 +68,34 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public DoctorDto updateDoctor(DoctorDto doctorDto, Long id) {
+
         Doctor doctor = doctorRepository.findById(id)
-                .orElseThrow(()->new ResourceNotFoundException("Doctor id does not found!"+id));
+                .orElseThrow(() -> new ResourceNotFoundException("Doctor id not found: " + id));
+
         doctor.setName(doctorDto.getName());
         doctor.setSpecialization(doctorDto.getSpecialization());
         doctor.setPhone(doctorDto.getPhone());
         doctor.setStatus(doctorDto.getStatus());
 
-        //Handle department foreign key
+        // Handle department FK
         Department department = departmentRepository.findById(doctorDto.getDepartmentId())
-                .orElseThrow(()->new ResourceNotFoundException("Deparrment id not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Department id not found"));
+
         doctor.setDepartment(department);
 
-
+        // Save updated entity
         Doctor savedDoctor = doctorRepository.save(doctor);
-        //To Dto
-        DoctorDto dto = modelMapper.map(savedDoctor, DoctorDto.class);
+
+        // MANUAL DTO MAPPING (IMPORTANT)
+        DoctorDto dto = new DoctorDto();
+        dto.setId(savedDoctor.getId());
+        dto.setName(savedDoctor.getName());
+        dto.setSpecialization(savedDoctor.getSpecialization());
+        dto.setPhone(savedDoctor.getPhone());
+        dto.setStatus(savedDoctor.getStatus());
+
         dto.setDepartmentId(savedDoctor.getDepartment().getId());
+        dto.setDepartmentName(savedDoctor.getDepartment().getName());
 
         return dto;
     }

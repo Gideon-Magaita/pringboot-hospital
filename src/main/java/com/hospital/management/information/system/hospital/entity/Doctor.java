@@ -34,7 +34,7 @@ public class Doctor {
     @Column(nullable = false)
     private AvailabilityStatus status;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id")
     private Department department;
 
