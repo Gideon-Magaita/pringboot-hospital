@@ -34,6 +34,10 @@ public class Doctor {
     @Column(nullable = false)
     private AvailabilityStatus status;
 
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
+
     @CreationTimestamp
     @Column(name="created_at",updatable = false)
     private LocalDateTime createdAt;

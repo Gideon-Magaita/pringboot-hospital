@@ -16,4 +16,6 @@ public class DoctorDto {
     private String specialization;
     private String phone;
     private AvailabilityStatus status;
+
+    private Long departmentId;
 }
