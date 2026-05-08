@@ -1,6 +1,7 @@
 package com.hospital.management.information.system.hospital.dto;
 
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,5 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class DepartmentDto {
     private Long id;
+
+    @NotBlank(message = "Department name is required")
     private String name;
 }

@@ -3,6 +3,7 @@ package com.hospital.management.information.system.hospital.controller;
 
 import com.hospital.management.information.system.hospital.dto.DepartmentDto;
 import com.hospital.management.information.system.hospital.service.DepartmentService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class DepartmentController {
     private DepartmentService departmentService;
 
     @PostMapping
-    public ResponseEntity<DepartmentDto>createDepartment(@RequestBody DepartmentDto departmentDto){
+    public ResponseEntity<DepartmentDto>createDepartment(@Valid @RequestBody DepartmentDto departmentDto){
         DepartmentDto savedDepartment = departmentService.createDepartment(departmentDto);
         return new ResponseEntity<>(savedDepartment, HttpStatus.CREATED);
     }

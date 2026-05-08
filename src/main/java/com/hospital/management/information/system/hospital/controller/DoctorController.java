@@ -3,6 +3,7 @@ package com.hospital.management.information.system.hospital.controller;
 
 import com.hospital.management.information.system.hospital.dto.DoctorDto;
 import com.hospital.management.information.system.hospital.service.DoctorService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class DoctorController {
 
 //    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<DoctorDto>addDoctor(@RequestBody DoctorDto doctorDto){
+    public ResponseEntity<DoctorDto>addDoctor(@Valid @RequestBody DoctorDto doctorDto){
         DoctorDto savedDoctors = doctorService.addDoctor(doctorDto);
         return new ResponseEntity<>(savedDoctors, HttpStatus.CREATED);
     }
