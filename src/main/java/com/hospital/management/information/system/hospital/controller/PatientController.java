@@ -3,6 +3,7 @@ package com.hospital.management.information.system.hospital.controller;
 
 import com.hospital.management.information.system.hospital.dto.PatientDto;
 import com.hospital.management.information.system.hospital.service.PatientService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class PatientController {
     private PatientService patientService;
 
     @PostMapping
-    public ResponseEntity<PatientDto> addPatient(@RequestBody PatientDto patientDto){
+    public ResponseEntity<PatientDto> addPatient(@Valid @RequestBody PatientDto patientDto){
         PatientDto savedPatient = patientService.addPatient(patientDto);
         return new ResponseEntity<>(savedPatient, HttpStatus.CREATED);
 
@@ -38,7 +39,7 @@ public class PatientController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<PatientDto>updatePatient(@RequestBody PatientDto patientDto,@PathVariable("id") Long patientId){
+    public ResponseEntity<PatientDto>updatePatient(@Valid @RequestBody PatientDto patientDto,@PathVariable("id") Long patientId){
         PatientDto updatedPatient = patientService.updatePatient(patientDto,patientId);
         return ResponseEntity.ok(updatedPatient);
     }
