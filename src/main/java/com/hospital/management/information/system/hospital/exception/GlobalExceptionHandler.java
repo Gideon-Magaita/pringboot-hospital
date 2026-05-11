@@ -38,4 +38,21 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(InvoiceAlreadyExistsException.class)
+    public ResponseEntity<ErrorDetails> handleInvoiceAlreadyExists(
+            InvoiceAlreadyExistsException exception,
+            WebRequest request) {
+
+        ErrorDetails errorDetails = new ErrorDetails(
+                LocalDateTime.now(),
+                exception.getMessage(),
+                request.getDescription(false)
+        );
+
+        return new ResponseEntity<>(
+                errorDetails,
+                HttpStatus.CONFLICT // 409 is perfect for duplicates
+        );
+    }
 }

@@ -6,6 +6,7 @@ import com.hospital.management.information.system.hospital.service.BillingServic
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,16 +17,20 @@ import java.util.List;
 public class BillingController {
     private BillingService billingService;
 
+    @PreAuthorize("hasAnyRole('ADMIN','RECEPTIONIST')")
     @PostMapping
     public ResponseEntity<BillingDto>createBilling(@RequestBody BillingDto billingDto){
         BillingDto savedBilling = billingService.createBilling(billingDto);
         return new ResponseEntity<>(savedBilling, HttpStatus.CREATED);
     }
+
     @GetMapping("{id}")
     public ResponseEntity<BillingDto>getBill(@PathVariable("id") Long billId){
         BillingDto getBills = billingService.getBill(billId);
         return ResponseEntity.ok(getBills);
     }
+
+    @PreAuthorize("hasAnyRole('ADMIN','RECEPTIONIST')")
     @GetMapping
     public ResponseEntity<List<BillingDto>>getAllBills(){
         List<BillingDto> listOfBills = billingService.getAllBills();

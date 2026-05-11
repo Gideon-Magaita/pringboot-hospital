@@ -18,27 +18,62 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name="billing")
 public class Billing {
+
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="patient_id",nullable = false)
-    private Patient patient;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="appointment_id",nullable = false)
-    private Appointment appointment;
-
-    @Column(name="total_amount",nullable = false,precision = 10,scale = 2)
     private BigDecimal totalAmount;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="payment_status")
     private PaymentStatus status;
 
-    @CreationTimestamp
-    @Column(name="created_at",updatable = false)
-    private LocalDateTime createdAt;
+    private String invoiceNumber;
 
+    // RELATIONSHIPS
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
+
+    @OneToOne
+    @JoinColumn(name = "appointment_id")
+    private Appointment appointment;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+//public class Billing {
+//    @Id
+//    @GeneratedValue(strategy= GenerationType.IDENTITY)
+//    private Long id;
+//
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name="patient_id",nullable = false)
+//    private Patient patient;
+//
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name="appointment_id",nullable = false)
+//    private Appointment appointment;
+//
+//    @Column(name="total_amount",nullable = false,precision = 10,scale = 2)
+//    private BigDecimal totalAmount;
+//
+//    @Enumerated(EnumType.STRING)
+//    @Column(name="payment_status")
+//    private PaymentStatus status;
+//
+//    @CreationTimestamp
+//    @Column(name="created_at",updatable = false)
+//    private LocalDateTime createdAt;
+//
+//}

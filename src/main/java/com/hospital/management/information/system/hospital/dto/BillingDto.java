@@ -8,16 +8,40 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class BillingDto {
+
     private Long id;
+
+    private String invoiceNumber;
+
     private Long patientId;
+
     private Long appointmentId;
+
     private BigDecimal totalAmount;
+
     private PaymentStatus status;
 
+    private String patientName;
+
+    private String doctorName;
+
+    private LocalDate appointmentDate;
 }
+
+
+
+//public class BillingDto {
+//    private Long id;
+//    private Long patientId;
+//    private Long appointmentId;
+//    private BigDecimal totalAmount;
+//    private PaymentStatus status;
+//
+//}
