@@ -5,6 +5,7 @@ import com.hospital.management.information.system.hospital.service.AppointmentSe
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class AppointmentController {
         return new ResponseEntity<>(savedAppointment, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','RECEPTIONIST')")
     @GetMapping("{id}")
     public ResponseEntity<AppointmentDto> getAppointment(@PathVariable("id") Long appointmentId) {
         AppointmentDto appointment = appointmentService.getAppointment(appointmentId);

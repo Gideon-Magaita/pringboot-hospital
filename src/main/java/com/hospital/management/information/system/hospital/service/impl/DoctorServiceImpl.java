@@ -37,7 +37,7 @@ public class DoctorServiceImpl implements DoctorService {
         // Save entity
         Doctor savedDoctor = doctorRepository.save(doctor);
 
-        // Entity -> DTO (MANUAL FIX HERE)
+        // Entity -> DTO
         DoctorDto responseDto = new DoctorDto();
         responseDto.setId(savedDoctor.getId());
         responseDto.setName(savedDoctor.getName());
@@ -86,7 +86,7 @@ public class DoctorServiceImpl implements DoctorService {
         // Save updated entity
         Doctor savedDoctor = doctorRepository.save(doctor);
 
-        // MANUAL DTO MAPPING (IMPORTANT)
+        // MANUAL DTO MAPPING
         DoctorDto dto = new DoctorDto();
         dto.setId(savedDoctor.getId());
         dto.setName(savedDoctor.getName());

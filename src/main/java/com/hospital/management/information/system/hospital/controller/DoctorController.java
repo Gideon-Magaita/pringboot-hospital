@@ -33,7 +33,7 @@ public class DoctorController {
         return ResponseEntity.ok(doctor);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','RECEPTIONIST')")
     @GetMapping
     public ResponseEntity<List<DoctorDto>>getAllDoctors(){
         List<DoctorDto> doctorList = doctorService.getAllDoctors();

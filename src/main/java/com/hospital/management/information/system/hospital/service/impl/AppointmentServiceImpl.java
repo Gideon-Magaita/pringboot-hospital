@@ -40,49 +40,173 @@ public class AppointmentServiceImpl implements AppointmentService {
         appointment.setPatient(patient);
         //Saved Entity
         Appointment savedAppointment = appointmentRepository.save(appointment);
+
         //Entity->Dto
-        return modelMapper.map(savedAppointment,AppointmentDto.class);
+        AppointmentDto responseDTO = new AppointmentDto();
+        responseDTO.setId(savedAppointment.getId());
+        responseDTO.setAppointmentDate(savedAppointment.getAppointmentDate());
+        responseDTO.setStatus(savedAppointment.getStatus());
+
+        responseDTO.setDoctorId(savedAppointment.getDoctor().getId());
+        responseDTO.setDoctorName(savedAppointment.getDoctor().getName());
+
+        responseDTO.setPatientId(savedAppointment.getPatient().getId());
+        responseDTO.setPatientName(
+                savedAppointment.getPatient().getFirstName()
+                        + " " +
+                        savedAppointment.getPatient().getLastName()
+        );
+
+        return responseDTO;
     }
 
     @Override
     public AppointmentDto getAppointment(Long id) {
-        Appointment appointment = appointmentRepository.findById(id)
-                .orElseThrow(()->new ResourceNotFoundException("Appointment not found"+id));
 
-        return modelMapper.map(appointment,AppointmentDto.class);
+        Appointment appointment = appointmentRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Appointment not found " + id
+                        ));
+
+        AppointmentDto dto = new AppointmentDto();
+
+        dto.setId(appointment.getId());
+        dto.setAppointmentDate(appointment.getAppointmentDate());
+        dto.setStatus(appointment.getStatus());
+        dto.setNotes(appointment.getNotes());
+
+        // DOCTOR
+
+        dto.setDoctorId(appointment.getDoctor().getId());
+        dto.setDoctorName(appointment.getDoctor().getName());
+
+        // PATIENT
+
+        dto.setPatientId(appointment.getPatient().getId());
+
+        dto.setPatientName(
+                appointment.getPatient().getFirstName()
+                        + " " +
+                appointment.getPatient().getLastName()
+        );
+
+        return dto;
     }
 
     @Override
     public List<AppointmentDto> getAllAppointments() {
-        List<Appointment> appointments = appointmentRepository.findAll();
-        return appointments.stream().map((appointment)->modelMapper
-                .map(appointment,AppointmentDto.class))
-                .collect(Collectors.toList());
+
+        List<Appointment> appointments =
+                appointmentRepository.findAll();
+
+        return appointments.stream().map(appointment -> {
+            AppointmentDto dto = new AppointmentDto();
+
+            dto.setId(appointment.getId());
+
+            dto.setAppointmentDate(appointment.getAppointmentDate());
+
+            dto.setStatus(appointment.getStatus());
+
+            dto.setNotes(appointment.getNotes());
+
+            // DOCTOR
+            dto.setDoctorId(appointment.getDoctor().getId());
+            dto.setDoctorName(appointment.getDoctor().getName());
+
+            // PATIENT
+            dto.setPatientId(appointment.getPatient().getId());
+            dto.setPatientName(appointment.getPatient().getFirstName()
+                            + " " + appointment.getPatient().getLastName());
+
+            return dto;
+
+        }).toList();
     }
+
 
     @Override
     public AppointmentDto updateAppointments(AppointmentDto appointmentDto, Long id) {
-        Appointment appointment = appointmentRepository.findById(id)
-                .orElseThrow(()->new ResourceNotFoundException("Appointment id not found"+id));
-        appointment.setAppointmentDate(appointmentDto.getAppointmentDate());
-        appointment.setStatus(appointmentDto.getStatus());
-        appointment.setNotes(appointmentDto.getNotes());
 
-        //handle doctor foreign key
-        Doctor doctor =doctorRepository.findById(appointmentDto.getDoctorId())
-                .orElseThrow(()->new ResourceNotFoundException("Doctor not found!"));
+        Appointment appointment = appointmentRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Appointment id not found " + id
+                        ));
+
+        appointment.setAppointmentDate(
+                appointmentDto.getAppointmentDate()
+        );
+
+        appointment.setStatus(
+                appointmentDto.getStatus()
+        );
+
+        appointment.setNotes(
+                appointmentDto.getNotes()
+        );
+
+
+        // HANDLE DOCTOR FOREIGN KEY
+
+        Doctor doctor = doctorRepository.findById(
+                        appointmentDto.getDoctorId()
+                )
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Doctor not found!"
+                        ));
+
         appointment.setDoctor(doctor);
 
-        //handle patient foreign key
-        Patient patient = patientRepository.findById(appointmentDto.getPatientId())
-                .orElseThrow(()->new ResourceNotFoundException("Patient not found!"));
+
+        // HANDLE PATIENT FOREIGN KEY
+
+        Patient patient = patientRepository.findById(
+                        appointmentDto.getPatientId()
+                )
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Patient not found!"
+                        ));
+
         appointment.setPatient(patient);
 
-        Appointment updatedAppointment = appointmentRepository.save(appointment);
-        //To Dto
-        AppointmentDto dto = modelMapper.map(updatedAppointment,AppointmentDto.class);
+        // SAVE UPDATED APPOINTMENT
+        Appointment updatedAppointment =
+                appointmentRepository.save(appointment);
+
+
+        // ENTITY -> DTO
+
+        AppointmentDto dto = new AppointmentDto();
+
+        dto.setId(updatedAppointment.getId());
+
+        dto.setAppointmentDate(
+                updatedAppointment.getAppointmentDate()
+        );
+
+        dto.setStatus(
+                updatedAppointment.getStatus()
+        );
+
+        dto.setNotes(
+                updatedAppointment.getNotes()
+        );
+
+        // DOCTOR
         dto.setDoctorId(updatedAppointment.getDoctor().getId());
+        dto.setDoctorName(updatedAppointment.getDoctor().getName());
+
+        // PATIENT
         dto.setPatientId(updatedAppointment.getPatient().getId());
+        dto.setPatientName(
+                updatedAppointment.getPatient().getFirstName()
+                        + " " +
+                        updatedAppointment.getPatient().getLastName()
+        );
 
         return dto;
     }
