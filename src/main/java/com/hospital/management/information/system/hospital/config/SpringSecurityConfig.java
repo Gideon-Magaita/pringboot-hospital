@@ -40,7 +40,8 @@ public class SpringSecurityConfig {
     public CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowedOrigins(List.of("http://192.168.1.183:5173"));
+//        config.setAllowedOrigins(List.of("http://192.168.1.183:5173"));
+        config.setAllowedOrigins(List.of("http://192.168.11.48:5173"));
         config.setAllowedMethods(List.of("GET","POST","PUT","DELETE","PATCH","OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
