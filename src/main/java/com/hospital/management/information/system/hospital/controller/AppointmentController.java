@@ -44,6 +44,7 @@ public class AppointmentController {
         return ResponseEntity.ok(updatedAppointment);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','RECEPTIONIST')")
     @DeleteMapping("{id}")
     public ResponseEntity<String>deleteAppointment(@PathVariable("id") Long appointmentId){
         appointmentService.deleteAppointment(appointmentId);
