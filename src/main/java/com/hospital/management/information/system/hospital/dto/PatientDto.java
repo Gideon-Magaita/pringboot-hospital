@@ -1,5 +1,6 @@
 package com.hospital.management.information.system.hospital.dto;
 
+import com.hospital.management.information.system.hospital.enums.PatientCategory;
 import com.hospital.management.information.system.hospital.enums.PatientGender;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -27,6 +28,9 @@ public class PatientDto {
 
     @NotNull(message = "Gender is required")
     private PatientGender gender;
+
+    @NotNull(message = "Patient category is required")
+    private PatientCategory category;
 
     @NotNull(message = "Date of birth is required")
     private LocalDate dateOfBirth;

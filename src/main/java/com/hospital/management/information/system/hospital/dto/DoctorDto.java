@@ -19,9 +19,6 @@ public class DoctorDto {
     @NotBlank(message = "Doctor name is required")
     private String name;
 
-    @NotBlank(message = "Specialization is required")
-    private String specialization;
-
     @NotBlank(message="Phone number is required")
     @Pattern(regexp = "^[0-9]{10,15}$", message = "Invalid phone number")
     private String phone;
@@ -32,6 +29,10 @@ public class DoctorDto {
     @NotNull(message = "Department is required")
     private Long departmentId;
 
-
     private String departmentName;
+
+    private Long doctorSpecializationId;
+
+    private String specializationName;
+
 }

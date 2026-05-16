@@ -24,9 +24,6 @@ public class Doctor {
     @Column(name="doctor_name",nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String specialization;
-
     @Column(name="phone_number",nullable = false,length = 15)
     private String phone;
 
@@ -37,6 +34,11 @@ public class Doctor {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id")
     private Department department;
+
+    //Doctor specialization
+    @ManyToOne
+    @JoinColumn(name = "doctor_specialization_id")
+    private DoctorSpecialization specialization;
 
     @CreationTimestamp
     @Column(name="created_at",updatable = false)

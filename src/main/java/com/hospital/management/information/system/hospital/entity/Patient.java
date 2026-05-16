@@ -1,5 +1,6 @@
 package com.hospital.management.information.system.hospital.entity;
 
+import com.hospital.management.information.system.hospital.enums.PatientCategory;
 import com.hospital.management.information.system.hospital.enums.PatientGender;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -32,6 +33,11 @@ public class Patient {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private PatientGender gender;
+
+
+    @Column(name = "patient_category",nullable = false)
+    @Enumerated(EnumType.STRING)
+    private PatientCategory category;
 
     @Column(name="date_of_birth")
     private LocalDate dateOfBirth;

@@ -30,11 +30,11 @@ public class AppointmentServiceImpl implements AppointmentService {
     public AppointmentDto addAppointment(AppointmentDto appointmentDto) {
         //Dto->Entity
         Appointment appointment = modelMapper.map(appointmentDto,Appointment.class);
-        //Handle Doctor relationship
+        //Handle Doctor FK relationship
         Doctor doctor = doctorRepository.findById(appointmentDto.getDoctorId())
                 .orElseThrow(()->new ResourceNotFoundException("Doctor id does not found"));
         appointment.setDoctor(doctor);
-        // Handle Patient relationship
+        // Handle Patient FK relationship
         Patient patient = patientRepository.findById(appointmentDto.getPatientId())
                 .orElseThrow(()->new ResourceNotFoundException("Patient id does not found"));
         appointment.setPatient(patient);
