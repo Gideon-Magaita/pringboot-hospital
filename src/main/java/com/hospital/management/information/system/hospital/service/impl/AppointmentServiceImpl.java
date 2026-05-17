@@ -7,6 +7,7 @@ import com.hospital.management.information.system.hospital.entity.Patient;
 import com.hospital.management.information.system.hospital.exception.ResourceNotFoundException;
 import com.hospital.management.information.system.hospital.repository.AppointmentRepository;
 import com.hospital.management.information.system.hospital.repository.DoctorRepository;
+import com.hospital.management.information.system.hospital.repository.DoctorSpecializationRepository;
 import com.hospital.management.information.system.hospital.repository.PatientRepository;
 import com.hospital.management.information.system.hospital.service.AppointmentService;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     private AppointmentRepository appointmentRepository;
     private DoctorRepository doctorRepository;
     private PatientRepository patientRepository;
+    private DoctorSpecializationRepository doctorSpecializationRepository;
     private ModelMapper modelMapper;
 
     @Override
@@ -46,6 +48,20 @@ public class AppointmentServiceImpl implements AppointmentService {
         responseDTO.setId(savedAppointment.getId());
         responseDTO.setAppointmentDate(savedAppointment.getAppointmentDate());
         responseDTO.setStatus(savedAppointment.getStatus());
+
+        //Specialization price
+        responseDTO.setConsultationPrice(
+                savedAppointment.
+                        getDoctor().
+                        getSpecialization().
+                        getPrice());
+
+        // SPECIALIZATION NAME
+        responseDTO.setSpecializationName(
+                savedAppointment.getDoctor()
+                        .getSpecialization()
+                        .getSpecialization()
+        );
 
         responseDTO.setDoctorId(savedAppointment.getDoctor().getId());
         responseDTO.setDoctorName(savedAppointment.getDoctor().getName());
@@ -75,6 +91,22 @@ public class AppointmentServiceImpl implements AppointmentService {
         dto.setAppointmentDate(appointment.getAppointmentDate());
         dto.setStatus(appointment.getStatus());
         dto.setNotes(appointment.getNotes());
+
+
+        //set consultation price
+        dto.setConsultationPrice(
+                appointment
+                        .getDoctor()
+                        .getSpecialization()
+                        .getPrice()
+        );
+
+        // SPECIALIZATION NAME
+        dto.setSpecializationName(
+                appointment.getDoctor()
+                        .getSpecialization()
+                        .getSpecialization()
+        );
 
         // DOCTOR
 
@@ -110,6 +142,21 @@ public class AppointmentServiceImpl implements AppointmentService {
             dto.setStatus(appointment.getStatus());
 
             dto.setNotes(appointment.getNotes());
+
+            //set consultation price
+            dto.setConsultationPrice(
+                    appointment
+                            .getDoctor()
+                            .getSpecialization()
+                            .getPrice()
+            );
+
+            // SPECIALIZATION NAME
+            dto.setSpecializationName(
+                    appointment.getDoctor()
+                            .getSpecialization()
+                            .getSpecialization()
+            );
 
             // DOCTOR
             dto.setDoctorId(appointment.getDoctor().getId());
@@ -195,6 +242,23 @@ public class AppointmentServiceImpl implements AppointmentService {
         dto.setNotes(
                 updatedAppointment.getNotes()
         );
+
+        //Set consultation price
+        dto.setConsultationPrice(
+                updatedAppointment
+                        .getDoctor()
+                        .getSpecialization()
+                        .getPrice()
+        );
+
+
+        // SPECIALIZATION NAME
+        dto.setSpecializationName(
+                updatedAppointment.getDoctor()
+                        .getSpecialization()
+                        .getSpecialization()
+        );
+
 
         // DOCTOR
         dto.setDoctorId(updatedAppointment.getDoctor().getId());

@@ -38,6 +38,10 @@ public class Billing {
     @OneToOne
     @JoinColumn(name = "appointment_id")
     private Appointment appointment;
+
+    @CreationTimestamp
+    @Column(name="created_at",updatable = false)
+    private LocalDateTime createdAt;
 }
 
 

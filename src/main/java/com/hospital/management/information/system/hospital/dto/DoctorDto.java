@@ -14,19 +14,15 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DoctorDto {
+
     private Long id;
 
-    @NotBlank(message = "Doctor name is required")
     private String name;
 
-    @NotBlank(message="Phone number is required")
-    @Pattern(regexp = "^[0-9]{10,15}$", message = "Invalid phone number")
     private String phone;
 
-    @NotNull(message = "Status is required")
     private AvailabilityStatus status;
 
-    @NotNull(message = "Department is required")
     private Long departmentId;
 
     private String departmentName;
@@ -35,4 +31,38 @@ public class DoctorDto {
 
     private String specializationName;
 
+    // =========================
+    // LOGIN FIELDS
+    // =========================
+
+    private String username;
+
+    private String email;
+
+    private String password;
 }
+
+
+//public class DoctorDto {
+//    private Long id;
+//
+//    @NotBlank(message = "Doctor name is required")
+//    private String name;
+//
+//    @NotBlank(message="Phone number is required")
+//    @Pattern(regexp = "^[0-9]{10,15}$", message = "Invalid phone number")
+//    private String phone;
+//
+//    @NotNull(message = "Status is required")
+//    private AvailabilityStatus status;
+//
+//    @NotNull(message = "Department is required")
+//    private Long departmentId;
+//
+//    private String departmentName;
+//
+//    private Long doctorSpecializationId;
+//
+//    private String specializationName;
+//
+//}

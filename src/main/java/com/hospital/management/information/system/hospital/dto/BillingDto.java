@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -33,15 +34,7 @@ public class BillingDto {
     private String doctorName;
 
     private LocalDate appointmentDate;
+
+    private LocalDateTime createdAt;
 }
 
-
-
-//public class BillingDto {
-//    private Long id;
-//    private Long patientId;
-//    private Long appointmentId;
-//    private BigDecimal totalAmount;
-//    private PaymentStatus status;
-//
-//}

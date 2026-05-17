@@ -43,4 +43,9 @@ public class Doctor {
     @CreationTimestamp
     @Column(name="created_at",updatable = false)
     private LocalDateTime createdAt;
+
+    //User for login purposes
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

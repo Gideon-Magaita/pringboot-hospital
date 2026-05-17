@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Setter
@@ -24,4 +25,8 @@ public class AppointmentDto {
 
     private String doctorName;
     private String patientName;
+
+    //consultation price from specialization
+    private String specializationName;
+    private BigDecimal consultationPrice;
 }

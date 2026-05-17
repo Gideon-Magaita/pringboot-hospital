@@ -117,23 +117,6 @@ public class BillingServiceImlp implements BillingService {
         return dto;
     }
 
-//    public BillingDto createBilling(BillingDto billingDto) {
-//        //Dto->Entity
-//        Billing billing = modelMapper.map(billingDto, Billing.class);
-//        //Handle Patient foreignkey
-//        Patient patient = patientRepository.findById(billingDto.getPatientId())
-//                .orElseThrow(()->new ResourceNotFoundException("Patient not found!"));
-//        billing.setPatient(patient);
-//        //Handle Appointment foregnkey
-//        Appointment appointment = appointmentRepository.findById(billingDto.getAppointmentId())
-//                .orElseThrow(()->new ResourceNotFoundException("Appointment not found!"));
-//        billing.setAppointment(appointment);
-//        //Saved Entity
-//        Billing savedBilling = billingRepository.save(billing);
-//        //Entity->Dto
-//        return modelMapper.map(savedBilling,BillingDto.class);
-//    }
-
     @Override
     public BillingDto getBill(Long id) {
         Billing bills = billingRepository.findById(id)
@@ -152,23 +135,13 @@ public class BillingServiceImlp implements BillingService {
 
             dto.setId(bill.getId());
 
-            dto.setInvoiceNumber(
-                    bill.getInvoiceNumber()
-            );
-
-            dto.setTotalAmount(
-                    bill.getTotalAmount()
-            );
-
-            dto.setStatus(
-                    bill.getStatus()
-            );
+            dto.setInvoiceNumber(bill.getInvoiceNumber());
+            dto.setTotalAmount(bill.getTotalAmount());
+            dto.setStatus(bill.getStatus());
 
 
             // PATIENT
-            dto.setPatientId(
-                    bill.getPatient().getId()
-            );
+            dto.setPatientId(bill.getPatient().getId());
 
             dto.setPatientName(
                     bill.getPatient().getFirstName()
@@ -176,20 +149,12 @@ public class BillingServiceImlp implements BillingService {
                             bill.getPatient().getLastName()
             );
 
-
             // APPOINTMENT
 
-            dto.setAppointmentId(
-                    bill.getAppointment().getId()
-            );
-
-            dto.setAppointmentDate(
-                    bill.getAppointment().getAppointmentDate()
-            );
-
+            dto.setAppointmentId(bill.getAppointment().getId());
+            dto.setAppointmentDate(bill.getAppointment().getAppointmentDate());
 
             // DOCTOR
-
             dto.setDoctorName(
                     bill.getAppointment()
                             .getDoctor()
@@ -201,11 +166,6 @@ public class BillingServiceImlp implements BillingService {
         }).collect(Collectors.toList());
     }
 
-//    public List<BillingDto> getAllBills() {
-//        List<Billing> bills = billingRepository.findAll();
-//        return bills.stream().map((bill)->modelMapper.map(bill,BillingDto.class))
-//                .collect(Collectors.toList());
-//    }
 
     @Override
     public BillingDto updateBilling(BillingDto billingDto, Long id) {

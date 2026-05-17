@@ -36,6 +36,7 @@ public class BillingController {
         List<BillingDto> listOfBills = billingService.getAllBills();
         return ResponseEntity.ok(listOfBills);
     }
+
     @PutMapping("{id}")
     public ResponseEntity<BillingDto>updatedBilling(@RequestBody BillingDto billingDto,@PathVariable("id") Long billingId){
         BillingDto updatedBilling = billingService.updateBilling(billingDto,billingId);

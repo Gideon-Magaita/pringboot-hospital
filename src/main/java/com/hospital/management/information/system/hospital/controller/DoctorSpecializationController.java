@@ -29,4 +29,30 @@ public class DoctorSpecializationController {
         List<DoctorSpecializationDto> doctorList = doctorSpecializationService.getAllSpecializations();
         return ResponseEntity.ok(doctorList);
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("{id}")
+    public ResponseEntity<DoctorSpecializationDto>getSpecializationById(@PathVariable("id")Long specializationId){
+        DoctorSpecializationDto specializations = doctorSpecializationService.getSpecializationById(specializationId);
+        return ResponseEntity.ok(specializations);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("{id}")
+    public ResponseEntity<DoctorSpecializationDto>updateSpecialization(
+            @RequestBody DoctorSpecializationDto doctorSpecializationDto,
+            @PathVariable("id") Long specializationId)
+    {
+        DoctorSpecializationDto updatedDoctor = doctorSpecializationService
+                .updateSpecialization(doctorSpecializationDto,specializationId);
+        return ResponseEntity.ok(updatedDoctor);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("{id}")
+    public ResponseEntity<String>deleteSpecialization(@PathVariable("id") Long specializationId){
+        doctorSpecializationService.deleteSpecilization(specializationId);
+        return ResponseEntity.ok("Doctor specialization deleted successfully!!");
+
+    }
 }

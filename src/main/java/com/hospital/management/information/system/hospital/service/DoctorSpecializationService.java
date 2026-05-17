@@ -7,4 +7,7 @@ import java.util.List;
 public interface DoctorSpecializationService {
     DoctorSpecializationDto createSpecialization(DoctorSpecializationDto doctorSpecializationDto);
     List<DoctorSpecializationDto> getAllSpecializations();
+    DoctorSpecializationDto getSpecializationById(Long id);
+    DoctorSpecializationDto updateSpecialization(DoctorSpecializationDto doctorSpecializationDto,Long id);
+    void deleteSpecilization(Long id);
 }

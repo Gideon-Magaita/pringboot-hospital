@@ -35,7 +35,7 @@ public class Patient {
     private PatientGender gender;
 
 
-    @Column(name = "patient_category",nullable = false)
+    @Column(name = "patient_category")
     @Enumerated(EnumType.STRING)
     private PatientCategory category;
 
