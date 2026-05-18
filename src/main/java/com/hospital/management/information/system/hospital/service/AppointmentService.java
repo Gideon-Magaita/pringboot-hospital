@@ -11,4 +11,7 @@ public interface AppointmentService {
     List<AppointmentDto> getAllAppointments();
     AppointmentDto updateAppointments(AppointmentDto appointmentDto,Long id);
     void deleteAppointment(Long id);
+
+    //Get appointment by doctor
+    List<AppointmentDto> getAppointmentsByDoctor(String username);
 }

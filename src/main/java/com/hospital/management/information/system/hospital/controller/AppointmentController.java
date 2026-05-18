@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,6 +32,7 @@ public class AppointmentController {
         return ResponseEntity.ok(appointment);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','RECEPTIONIST')")
     @GetMapping
     public ResponseEntity<List<AppointmentDto>>getAllAppointments(){
         List<AppointmentDto> appointmentList = appointmentService.getAllAppointments();
@@ -49,5 +51,18 @@ public class AppointmentController {
     public ResponseEntity<String>deleteAppointment(@PathVariable("id") Long appointmentId){
         appointmentService.deleteAppointment(appointmentId);
         return ResponseEntity.ok("Appointment deleted successfully!");
+    }
+
+    //Get patients appointments by doctor username
+    @PreAuthorize("hasRole('DOCTOR')")
+    @GetMapping("/doctor/appointments")
+    public ResponseEntity<List<AppointmentDto>>
+    getDoctorAppointments(Authentication authentication) {
+
+        String username = authentication.getName();
+
+        return ResponseEntity.ok(
+                appointmentService.getAppointmentsByDoctor(username)
+        );
     }
 }

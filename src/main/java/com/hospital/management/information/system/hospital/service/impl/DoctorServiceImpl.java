@@ -273,7 +273,6 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
 
-
     @Override
     public List<DoctorDto> getAllDoctors() {
 

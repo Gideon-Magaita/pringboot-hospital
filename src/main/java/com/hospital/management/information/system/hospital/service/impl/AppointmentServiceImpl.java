@@ -282,5 +282,73 @@ public class AppointmentServiceImpl implements AppointmentService {
         appointmentRepository.deleteById(id);
     }
 
+    //Get appointment by doctor
+    @Override
+    public List<AppointmentDto> getAppointmentsByDoctor(String username) {
+
+        // =========================
+        // FIND LOGGED IN DOCTOR
+        // =========================
+        Doctor doctor = doctorRepository
+                .findByUserUsername(username)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Doctor not found"
+                        ));
+
+        // =========================
+        // GET APPOINTMENTS
+        // =========================
+        List<Appointment> appointments =
+                appointmentRepository.findByDoctorId(
+                        doctor.getId()
+                );
+
+        // =========================
+        // MAP TO DTO
+        // =========================
+        return appointments.stream().map(appointment -> {
+
+            AppointmentDto dto = new AppointmentDto();
+
+            dto.setId(appointment.getId());
+
+            dto.setAppointmentDate(
+                    appointment.getAppointmentDate()
+            );
+
+            dto.setStatus(
+                    appointment.getStatus()
+            );
+
+            dto.setNotes(
+                    appointment.getNotes()
+            );
+
+            // doctor
+            dto.setDoctorId(
+                    appointment.getDoctor().getId()
+            );
+
+            dto.setDoctorName(
+                    appointment.getDoctor().getName()
+            );
+
+            // patient
+            dto.setPatientId(
+                    appointment.getPatient().getId()
+            );
+
+            dto.setPatientName(
+                    appointment.getPatient().getFirstName()
+                            + " "
+                            + appointment.getPatient().getLastName()
+            );
+
+            return dto;
+
+        }).toList();
+    }
+
 
 }
